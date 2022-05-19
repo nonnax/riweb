@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width" />
-		<title>Wup</title>
+		<title>ri Online</title>
     <style type="text/css" media="all">
 	    body{
 	      background: seashell;
@@ -14,6 +14,32 @@
 	      margin: 4px auto; 
 	      
 	    }
+	    h1,
+	    h2,
+	    h3{
+	      background:red;
+	      color: white;
+	    }
+	    a{
+	      display: block;
+	      text-decoration: none;
+	    }
+	    #container{
+	      display: flex;
+	      flex-flow: wrap row;
+	    }
+	    .item{
+	      flex:  0 10px;
+	      margin: 4px auto;
+	      padding: 4px;
+	      border: 1px solid silver;
+
+	    }
+	    .article{
+	      flex: 1 0 96vw;
+	      margin: 4px auto;
+	    }
+
 	    .matched{
 	      background:red;
 	      color:white;
@@ -22,13 +48,13 @@
 	</head>
 	<body>
 	  <div id="search">
-	    <form action="/" method="get">
-	      <input type="text" style="height:30px;width:30%;padding-left:4px;" name="q" value="<%=q%>" />
+	    <form action="/search" method="get">
+	      <input type="text" style="height:30px;width:30%;padding-left:4px;" name="q" value="<%=data[:q]%>" />
       </form>
       <hr>
 	  </div>
-		<pre style="white-space:pre-line;">
-		<%=yield%>
+		<pre id="container" style="white-space:pre-line;">
+		  <%=yield%>
 		</pre>
 	</body>
 </html>

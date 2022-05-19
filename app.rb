@@ -1,16 +1,23 @@
 #!/usr/bin/env ruby
 # Id$ nonnax 2022-05-18 19:38:23 +0800
-require 'numa'
-require 'kramdown'
+require_relative 'lib/get0'
 
-def md(s); Kramdown::Document.new(s).to_html end
-def u(s); Rack::Utils.escape(s) end
+Getr.enable :views
+
 App=
-Numa.new do
-  res.headers[Rack::CONTENT_TYPE]='text/html; charset=utf-8;'
-  on '/', q: "\b" do |q|
-    res=IO.popen(["ri", q], &:read)
-    data=md(res)
+Getr.new do
+
+  headers type: 'html'
+
+  on '/search', q: "" do |q|
+    res=IO.popen(["ri","-a", q], &:read)
+    data=['<div class="article">',md(res),'</div>'].join(' ')
+    erb data, q:
+  end
+
+  on '/', q: "" do |q|
+    res=IO.popen(["ri", '-l'], &:readlines)
+    data=res.map{|e| ["<div class='item'><a href='/search?q=#{e}'>", e, "</a></div>"].join }.join(' ')
     erb data, q:
   end
 end
